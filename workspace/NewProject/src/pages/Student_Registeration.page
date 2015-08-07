@@ -1,0 +1,58 @@
+<apex:page standardcontroller="Student__c"
+	extensions="Student_RegistrationController" language="{!selectedLang}">
+	 <apex:pageblock >
+	<apex:pageMessages id="msg"> </apex:pageMessages>
+	<apex:form id="formId">
+		 <apex:pageblocksection >
+			  <apex:selectlist value="{!selectedLang}" multiselect="False" size="1"> 
+			<apex:selectOption itemvalue="en_US" itemlabel="English"/>
+			<apex:selectOption itemvalue="fr" itemlabel="French"/>
+			<apex:selectOption itemvalue="es" itemlabel="Spanish"/>
+			<apex:actionSupport event="onchange" reRender="formId">
+			
+			</apex:actionSupport>
+		</apex:selectlist>
+		 
+		<br/><br/>
+	
+		<apex:inputField value="{!studInstance.name}" id="s_name" />
+		<br />
+		<br />
+		
+		
+		<apex:inputField value="{!studInstance.Roll_No__c}" id="s_roll" />
+		<br />
+		<br />
+		
+		
+		<apex:inputField value="{!studInstance.Course_Applying_for__c}" />
+		<br />
+		<br />
+
+		
+		<apex:inputField value="{!studInstance.HSC__c}" id="s_HSC" />
+		<br />
+		<br />
+		
+		<apex:inputField value="{!studInstance.SSC__c}" id="s_SSC" />
+		<br />
+		<br />
+		
+		<apex:inputField value="{!studInstance.Country__c}" id="s_Country" />
+		<br />
+		<br />
+		
+		<apex:inputField value="{!studInstance.State__c}" id="s_State" />
+		<br />
+		<br />
+		
+		<apex:inputField value="{!studInstance.City__c }" id="s_City" />
+		<br />
+		<br />
+		<apex:commandButton id="s_save" value="Submit" action="{!saveStud}"
+			reRender="formId,msg" />
+			</apex:pageblocksection>
+	</apex:form>
+	
+	</apex:pageblock>
+</apex:page>

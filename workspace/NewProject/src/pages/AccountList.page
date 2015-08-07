@@ -1,0 +1,39 @@
+<apex:page controller="AccountListController">
+	<apex:form title="Accounts">
+
+		<apex:outputText value="Watch this counter: {!count}" id="counter" />
+		<apex:actionPoller action="{!incrementCounter}" reRender="counter"
+			interval="5" />
+
+		<h1>Account List</h1>
+		<br />
+		<br />
+
+		<apex:inputText value="{!searchText}" />
+		<apex:commandButton value="Search" action="{!searchAccounts}"
+			reRender="pageblock" />
+
+		<br />
+		<apex:pageMessages id="showmsg"></apex:pageMessages>
+
+		<apex:pageBlock title="List" id="pageblock">
+
+			<apex:pageblockTable Value="{!listAccount}" var="accList" width="90%">
+				<apex:column headerValue="Name">
+					<apex:outputLink value="/{!accList.Id}">{!accList.name}</apex:outputLink>
+				</apex:column>
+				<apex:column value="{!accList.website}" headerValue="Website" />
+				<apex:column value="{!accList.phone}" headerValue="Phone" />
+				<apex:column headerValue="Manage">
+					<apex:commandButton Value="Manage Contacts"
+						action="{!redirectToContacts}" reRender="Unknonwn Block">
+						<apex:param name="AccountId" value="{!accList.id}" />
+						<apex:param name="AccountName" value="{!accList.Name}" />
+					</apex:commandButton>
+				</apex:column>
+			</apex:pageblockTable>
+		</apex:pageBlock>
+	</apex:form>
+	<apex:outputText id="footerAccCount" rendered="true"
+		value="Total Accounts={!accountCount}" />
+</apex:page>

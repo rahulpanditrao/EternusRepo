@@ -1,0 +1,60 @@
+<apex:page controller="AccountListController">
+	<apex:image value="{!$Resource.ImageJellyfish}" width="50" height="50" />
+	<apex:form title="Account Related Contacts">
+		<h1>
+			Contacts for <i>{!nameOfAccount}</i>
+		</h1>
+		<div align="right">
+			<apex:repeat value="{!filterChar}" var="filterchr"> 
+				<apex:commandLink value="{!filterchr}" action="{!setContactsFlag}"
+					reRender="contactpageblock">
+					<apex:param name="charSelected" value="{!filterchr}" />
+				</apex:commandLink>
+		  &nbsp;|&nbsp;
+		</apex:repeat>
+		</div>
+		<apex:pageBlock id="contactpageblock">
+			<apex:pageBlockTable value="{!RelatedContactsList}"
+				var="relatedContact">
+				<!--  <apex:column value="{!relatedContact.Id}" headerValue="Id" /> -->
+				<apex:column value="{!relatedContact.Name}" headerValue="Name" />
+				<apex:column value="{!relatedContact.Phone}" headerValue="Phone" />
+				<apex:column value="{!relatedContact.MobilePhone}"
+					headerValue="Mobile Phone" />
+				<apex:column >
+					<apex:facet name="header">Delete</apex:facet>
+					<apex:commandLink Id="deleteContact" Value="Delete"
+						onClick="delContactRemote('{!relatedContact.Id}')"
+						reRender="contactpageblock" />
+				</apex:column>
+			</apex:pageBlockTable>
+			<apex:pageBlockButtons >
+				<apex:commandButton action="{!returnToAccount}" value="Return" />
+				<apex:commandButton value="Add" />
+			</apex:pageBlockButtons>
+			<apex:pageblockSection title="Number Of Contacts Found">
+				<apex:outputText id="footerContactCount" rendered="true"
+					value="Total Contacts={!contactsCount}" />
+			</apex:pageblockSection>
+		</apex:pageBlock>
+	</apex:form>
+	<script type="text/javascript">
+		function delContactRemote(conId) {
+			alert(conId);
+			// var conId=document.getElementById('deleteContact').value;
+			Visualforce.remoting.Manager.invokeAction(
+					'{!$RemoteAction.AccountListController.deleteContact}',
+					conId, function(result, event) {
+						if (event.status == true) {
+							alert('The contact has been deleted');
+						} else if (event.type === 'exception') {
+							alert('Exception!!!!!!!!!');
+						}
+
+					})
+		}
+	</script>
+
+
+
+</apex:page>

@@ -1,0 +1,136 @@
+<apex:page standardController="Invoice_Statement__c"
+	standardStylesheets="false" renderAs="pdf" sidebar="false"
+	showHeader="false" applyHtmlTag="false" applyBodyTag="false">
+	<html>
+<head>
+<style>
+.Heading {
+	color: blue;
+	font-weight: bold;
+	font-family: Tahoma, Geneva, sans-serif font-size : 40 px;
+	text-align: right;
+	padding-left: 2cm;
+}
+
+table {
+	border-collapse: collapse;
+	width: 40%;
+}
+
+table,td,th {
+	background-color: #D2D9EB;
+	color: black;
+	text-align: center;
+	border: 1px solid #7d7d7d;
+}
+
+td {
+	background-color: white;
+}
+
+.datelist {
+	width: 60%;
+}
+
+.InvoiceTable {
+	margin-left: auto;
+	margin-right: 0%;
+}
+
+.DescriptionAboutTable {
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.noBorders {
+	border-bottom: white;
+	border-top: white;
+}
+
+.queriesLine {
+	text-align: center;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	<div class="Heading">
+		<apex:outputText value="INVOICE" />
+	</div>
+	<div>
+		<h2>ABC Containers</h2>
+		Rajendra Pandya,<br /> Nagpur, MH 444701
+		<apex:pageBlock >
+			<table class="InvoiceTable">
+				<tr>
+					<th>INVOICE #</th>
+					<th>DATE</th>
+				</tr>
+				<tr>
+					<td>{!Invoice_Statement__c.Name}</td>
+					<td class="datelist"><apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+							<apex:param value="{!Invoice_Statement__c.CreatedDate}" />
+						</apex:outputText></td>
+				</tr>
+			</table>
+
+		</apex:pageBlock>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<th>BILL TO</th>
+			</tr>
+		</table>
+		&nbsp;&nbsp;{!Invoice_statement__c.Customer_Name__c}<br />
+		&nbsp;&nbsp;{!Invoice_statement__c.Comapany_Name__c}<br />
+		&nbsp;&nbsp;{!Invoice_statement__c.Street_Address__c}<br />
+		&nbsp;&nbsp;{!Invoice_statement__c.City__c},
+		&nbsp;{!Invoice_statement__c.State__c}
+		&nbsp;{!Invoice_statement__c.Zip__c}<br />
+		&nbsp;&nbsp;{!Invoice_statement__c.Phone__c}<br />
+		&nbsp;&nbsp;{!Invoice_statement__c.Email__c}<br />
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<div>
+		<table class="DescriptionAboutTable">
+			<colgroup>
+				<col width="60%" />
+				<col width="40%" />
+				<col width="40%" />
+			</colgroup>
+			<tr>
+				<th colspan="2">Description</th>
+				<th>Amount</th>
+			</tr>
+			<apex:repeat value="{!Invoice_Statement__c.Line_Items__r}"
+				var="relItems">
+				<tr class="noBorders">
+					<td colspan="2">{!relItems.Merchandise_Name__r.Name}</td>
+					<td>{!relItems.Amount__c}</td>
+				</tr>
+			</apex:repeat>
+			<tr>
+				<td><i>Thank you for your business!</i></td>
+				<td>TOTAL</td>
+				<td>{!Invoice_statement__c.Sum__c}</td>
+			</tr>
+		</table>
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<div class="queriesLine">
+		If you have any questions about this Invoice, Please Contact<br />
+		Rajendra Pandya,<br /> Phone:9800000571<br />
+		Email:pandya.rajendra@gmail.com
+	</div>
+</body>
+	</html>
+</apex:page>

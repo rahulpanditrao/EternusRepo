@@ -1,0 +1,28 @@
+<apex:page controller="countryCityPageController">
+	<apex:form >
+		<apex:pageblock id="pageblockcity">
+			<apex:pageblocksection >
+
+				<apex:selectlist value="{!selectedCountryValue}" multiselect="false"
+					size="1" label="Country">
+					<apex:selectOptions value="{!availableCountryValues}" />
+					<apex:actionsupport event="onchange" action="{!populateCity}"
+						reRender="pageblockcity">
+					</apex:actionsupport>
+				</apex:selectlist>
+
+
+				<apex:selectlist value="{!selectedCityValue}" multiselect="false"
+					size="1" label="City">
+					<apex:selectOptions value="{!availableCityValues}" />
+
+
+
+				</apex:selectlist>
+
+			</apex:pageblocksection>
+		</apex:pageblock>
+
+	</apex:form>
+
+</apex:page>
